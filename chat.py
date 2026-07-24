@@ -7,8 +7,15 @@ load_dotenv()
 
 client = OpenAI()
 
+import os
+
 chroma_client = chromadb.PersistentClient(path="chroma_db")
-collection = chroma_client.get_collection("qvi_knowledge")
+
+try:
+    collection = chroma_client.get_collection("qvi_knowledge")
+except Exception:
+    import build_database
+    collection = chroma_client.get_collection("qvi_knowledge")
 
 st.set_page_config(
     page_title="QVI AI PRO",
